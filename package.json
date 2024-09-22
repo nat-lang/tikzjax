@@ -1,6 +1,6 @@
 {
 	"name": "tikzjax",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"description": "",
 	"main": "dist",
 	"scripts": {
@@ -10,7 +10,8 @@
 		"dev": "webpack --mode development",
 		"devbuild": "npm run encode-tex-files && webpack --mode development",
 		"build": "npm run encode-tex-files && webpack",
-		"postbuild": "node cleanup.js && npm run install-fonts"
+		"postbuild": "node cleanup.js && npm run install-fonts",
+		"prepublishOnly": "npm run build"
 	},
 	"author": "Jim Fowler",
 	"contributors": [
