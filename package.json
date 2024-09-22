@@ -2,7 +2,7 @@
 	"name": "tikzjax",
 	"version": "1.0.0",
 	"description": "",
-	"browser": "tikzjax.js",
+	"main": "dist",
 	"scripts": {
 		"gen-tex-files": "node genTexFiles.js",
 		"encode-tex-files": "node encodeTexFiles.js",
