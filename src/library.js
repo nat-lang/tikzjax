@@ -3,7 +3,7 @@ import { Buffer } from 'buffer';
 
 var filesystem = {};
 var files = [];
-var showConsole = false;
+var showConsole = true;
 var consoleBuffer = "";
 var memory = null;
 var inputBuffer = null;
@@ -67,13 +67,12 @@ export function deleteEverything() {
 	sleeping = false;
 }
 
-export function writeFileSync(filename, buffer)
-{
+export function writeFileSync(filename, buffer) {
 	filesystem[filename] = buffer;
 }
 
-export function readFileSync(filename)
-{
+export function readFileSync(filename) {
+	console.log(files);
 	for (let f of files) {
 		if (f.filename == filename) {
 			return f.content.slice(0, f.position);
@@ -83,8 +82,7 @@ export function readFileSync(filename)
 	throw Error(`Could not find file ${filename}`);
 }
 
-function openSync(filename, mode)
-{
+function openSync(filename, mode) {
 	let initialSleepState = sleeping;
 	if (sleeping) {
 		stopRewind();
@@ -120,7 +118,7 @@ function openSync(filename, mode)
 					try {
 						let data = await fileLoader(`tex_files/${filename}.gz`);
 						filesystem[filename] = data;
-					} catch (e) {}
+					} catch (e) { }
 					startRewind();
 				}, 0);
 				return -1;
@@ -145,8 +143,7 @@ function closeSync(fd) {
 	// ignore this.
 }
 
-function writeSync(file, buffer, pointer, length)
-{
+function writeSync(file, buffer, pointer, length) {
 	if (pointer === undefined) pointer = 0;
 	if (length === undefined) length = buffer.length - pointer;
 
@@ -156,19 +153,18 @@ function writeSync(file, buffer, pointer, length)
 		file.content = b;
 	}
 
-	file.content.subarray(file.position).set(buffer.subarray(pointer, pointer+length));
+	file.content.subarray(file.position).set(buffer.subarray(pointer, pointer + length));
 	file.position += length;
 }
 
-function readSync(file, buffer, pointer, length, seek)
-{
+function readSync(file, buffer, pointer, length, seek) {
 	if (pointer === undefined) pointer = 0;
 	if (length === undefined) length = buffer.length - pointer;
 
 	if (length > file.content.length - seek)
 		length = file.content.length - seek;
 
-	buffer.subarray(pointer).set(file.content.subarray(seek, seek+length));
+	buffer.subarray(pointer).set(file.content.subarray(seek, seek + length));
 
 	return length;
 }
@@ -310,7 +306,7 @@ export function reset(length, pointer) {
 	var buffer = new Uint8Array(memory, pointer, length);
 	var filename = String.fromCharCode.apply(null, buffer);
 
-	filename = filename.replace(/\000+$/g,'');
+	filename = filename.replace(/\000+$/g, '');
 
 	if (filename.startsWith('{')) {
 		filename = filename.replace(/^{/g, '');

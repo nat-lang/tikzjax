@@ -12,7 +12,7 @@ var code;
 async function loadDecompress(file) {
 	const prefix = "data:application/gzip;base64,";
 	const gzippedString = texFilesBase64[file];
-    const gzippedBuffer = Buffer.from(gzippedString.substring(prefix.length), 'base64');
+	const gzippedBuffer = Buffer.from(gzippedString.substring(prefix.length), 'base64');
 
 	try {
 		const unzippedBuffer = pako.ungzip(gzippedBuffer);
@@ -25,11 +25,11 @@ async function loadDecompress(file) {
 }
 
 expose({
-	load: async function() {
+	load: async function () {
 		code = await loadDecompress('tex.wasm.gz');
 		coredump = new Uint8Array(await loadDecompress('core.dump.gz'), 0, library.pages * 65536);
 	},
-	texify: async function(input, dataset) {
+	texify: async function (input, dataset) {
 		// Set up the tex input file.
 		let texPackages = dataset.texPackages ? JSON.parse(dataset.texPackages) : {};
 
