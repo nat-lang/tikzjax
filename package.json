@@ -1,35 +1,42 @@
 {
-  "name": "latex-demo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "start": "node ./app.js"
-  },
-  "author": "Jim Fowler",
-  "license": "GPL-3.0",
-  "dependencies": {
-    "browserfs": "^2.0.0",
-    "dvi2html": "0.0.2",
-    "express": "^4.16.4",
-    "fetch-readablestream": "^0.2.0",
-    "pako": "^1.0.8",
-    "web-streams-polyfill": "^1.3.2"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.3.3",
-    "@babel/preset-env": "^7.3.1",
-    "babel-loader": "^8.0.5",
-    "gulp": "^4.0.0",
-    "gulp-decompress": "^2.0.2",
-    "gulp-download2": "^1.0.2",
-    "gulp-filter": "^5.1.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-s3-upload": "^1.7.3",
-    "string-replace-loader": "^2.1.1",
-    "unzip": "^0.1.11",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3",
-    "webpack-stream": "^5.2.1"
-  }
+	"name": "tikzjax",
+	"version": "1.0.0",
+	"description": "",
+	"browser": "tikzjax.js",
+	"scripts": {
+		"gen-tex-files": "node genTexFiles.js",
+		"encode-tex-files": "node encodeTexFiles.js",
+		"install-fonts": "gulp download-fonts && gulp install-fonts && fontforge -lang=py -script patchFonts.py && node encodeFonts.js",
+		"dev": "webpack --mode development",
+		"devbuild": "npm run encode-tex-files && webpack --mode development",
+		"build": "npm run encode-tex-files && webpack",
+		"postbuild": "node cleanup.js && npm run install-fonts"
+	},
+	"author": "Jim Fowler",
+	"contributors": [
+		"Glenn Rice"
+	],
+	"license": "GPL-3.0+",
+	"dependencies": {
+		"buffer": "^6.0.3",
+		"dvi2html": "github:artisticat1/dvi2html#ww-modifications",
+		"fetch-readablestream": "^0.2.0",
+		"localforage": "^1.9.0",
+		"md5": "^2.3.0",
+		"pako": "^2.0.2",
+		"process": "^0.11.10",
+		"stream-browserify": "^3.0.0",
+		"threads": "^1.6.3"
+	},
+	"devDependencies": {
+		"copy-webpack-plugin": "^7.0.0",
+		"css-loader": "^5.0.1",
+		"gulp": "^4.0.2",
+		"gulp-decompress": "^3.0.0",
+		"gulp-download2": "^1.0.2",
+		"gulp-filter": "^6.0.0",
+		"style-loader": "^2.0.0",
+		"webpack": "^5.94.0",
+		"webpack-cli": "^4.3.0"
+	}
 }
