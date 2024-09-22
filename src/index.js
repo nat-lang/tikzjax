@@ -14,7 +14,7 @@ var observer = null;
 var texWorker;
 
 async function processTikzScripts(scripts) {
-	let currentProcessPromise = new Promise(async function(resolve, reject) {
+	let currentProcessPromise = new Promise(async function (resolve, reject) {
 		let texQueue = [];
 
 		async function loadCachedOrSetupLoader(elt) {
@@ -27,7 +27,7 @@ async function processTikzScripts(scripts) {
 				elt.replaceWith(svg);
 
 				// Emit a bubbling event that the svg is ready.
-				const loadFinishedEvent = new Event('tikzjax-load-finished', { bubbles: true});
+				const loadFinishedEvent = new Event('tikzjax-load-finished', { bubbles: true });
 				svg.dispatchEvent(loadFinishedEvent);
 			} else {
 				texQueue.push(elt);
@@ -53,7 +53,7 @@ async function processTikzScripts(scripts) {
 				loader.replaceWith(svg);
 
 				// Emit a bubbling event that the svg is ready.
-				const loadFinishedEvent = new Event('tikzjax-load-finished', { bubbles: true});
+				const loadFinishedEvent = new Event('tikzjax-load-finished', { bubbles: true });
 				svg.dispatchEvent(loadFinishedEvent);
 
 				return;
@@ -83,7 +83,7 @@ async function processTikzScripts(scripts) {
 			// Patch: Fixes symbols stored in the SOFT HYPHEN character (e.g. \Omega, \otimes) not being rendered
 			// Replaces soft hyphens with ¬
 			html = html.replaceAll("&#173;", "&#172;");
-	
+
 
 			let svg = document.createRange().createContextualFragment(html).firstChild;
 			loader.replaceWith(svg);
@@ -95,7 +95,7 @@ async function processTikzScripts(scripts) {
 			}
 
 			// Emit a bubbling event that the svg image generation is complete.
-			const loadFinishedEvent = new Event('tikzjax-load-finished', { bubbles: true});
+			const loadFinishedEvent = new Event('tikzjax-load-finished', { bubbles: true });
 			svg.dispatchEvent(loadFinishedEvent);
 		};
 
@@ -135,7 +135,7 @@ function getWorkerFromString(code) {
 
 	var blob;
 	try {
-		blob = new Blob([code], {type: 'application/javascript'});
+		blob = new Blob([code], { type: 'application/javascript' });
 	} catch (e) { // Backwards-compatibility
 		window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
 		blob = new BlobBuilder();
@@ -152,7 +152,7 @@ async function initializeWorker() {
 	// Set up the worker thread.
 	const tex = await spawn(getWorkerFromString(workerCode));
 	Thread.events(tex).subscribe(e => {
-		if (e.type == "message" && typeof(e.data) === "string") console.log(e.data);
+		if (e.type == "message" && typeof (e.data) === "string") console.log(e.data);
 	});
 
 	// Load the assembly and core dump.

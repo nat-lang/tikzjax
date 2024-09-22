@@ -4,10 +4,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (env, argv) => {
 	let tikzjaxConfig = {
-		name: "tikzjax",
+		name: "index.js",
 		mode: "production",
 		entry: {
-			tikzjax: './src/index.js',
+			"index": './src/index.js',
 		},
 		output: {
 			path: path.resolve(__dirname, 'dist'),
